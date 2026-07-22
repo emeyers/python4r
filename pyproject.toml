@@ -1,0 +1,19 @@
+[project]
+name = "python4r"
+version = "0.1.0"
+description = "Material for the JSM workshop Introduction to Python for R Users"
+readme = "README.md"
+requires-python = ">= 3.13.2"
+dependencies = [
+    "numpy",
+    "scipy",
+    "pandas",
+    "matplotlib",
+    "seaborn",
+    "statsmodels",
+    "scikit-learn",
+    "pandas-datareader",
+    "jupyterlab",
+    "imageio>=2.37.3",
+]
+
