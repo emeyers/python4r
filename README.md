@@ -11,8 +11,10 @@ This workshop introduces Python to statisticians and data scientists who already
 
 ## Before the Workshop
 
-Please complete the setup steps to download the appropriate material for the workshop. Instructions for how to do this will be added soon... 
+Please do the following prior to the start of the workshop: 
 
+1. Complete a background survey to help  tailor the workshop to everyone's interests (the sooner you can do this the better). A link to the survey will be added soon. 
+2. Complete the setup steps to download the appropriate material for the workshop. Instructions for how to do this will also be added soon.
 
 ---
 
