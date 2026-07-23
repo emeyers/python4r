@@ -4,15 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Python for R Users: JSM 2026 Workshop</title>
-<meta name="description" content="A JSM 2026 continuing-education workshop introducing Python to statisticians and data scientists who already know R. Slides, notebooks, and an R ↔ Python cheat sheet.">
+<meta name="description" content="A JSM 2026 continuing-education workshop introducing Python to statisticians and data scientists who already know R. Slides, notebooks, and an R to Python cheat sheet.">
 <meta name="author" content="Ethan Meyers">
 <meta name="theme-color" content="#3b5bdb">
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
 
 <!-- Open Graph / social -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="Python for R Users: JSM 2026 Workshop">
-<meta property="og:description" content="A hands-on afternoon introducing Python to R users: NumPy, pandas, seaborn, StatsModels, and scikit-learn, mapped to what you already know.">
+<meta property="og:description" content="An introduction to Python for R users, covering NumPy, pandas, seaborn, StatsModels, and scikit-learn.">
 <meta property="og:url" content="https://emeyers.github.io/python4r/">
 <meta name="twitter:card" content="summary">
 
@@ -126,7 +125,6 @@ img,svg{max-width:100%}
 .header-inner{display:flex;align-items:center;gap:1rem;height:var(--header-h)}
 .brand{display:flex;align-items:center;gap:.6rem;color:var(--text);font-weight:700;letter-spacing:-.02em;font-size:1.02rem}
 .brand:hover{text-decoration:none}
-.brand-mark{width:30px;height:30px;border-radius:9px;flex:none;box-shadow:var(--shadow-sm)}
 .brand-sub{color:var(--faint);font-weight:500}
 .spacer{flex:1}
 .nav{position:relative}
@@ -184,10 +182,6 @@ h1.title{font-size:clamp(2.5rem,5.4vw,3.9rem);font-weight:800;margin:1.1rem 0 0;
 
 /* code compare card */
 .compare{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow-lg);overflow:hidden}
-.compare-head{display:flex;align-items:center;gap:.5rem;padding:.7rem .95rem;border-bottom:1px solid var(--border);background:var(--surface-2)}
-.compare-head .tt{margin-left:auto;font-size:.78rem;color:var(--faint);font-weight:600}
-.dot3{display:flex;gap:.4rem}
-.dot3 span{width:11px;height:11px;border-radius:50%;background:var(--border-strong)}
 .compare-body{display:grid;grid-template-columns:1fr auto 1fr}
 .snip{padding:1.05rem 1.15rem;min-width:0}
 .snip+.snip{border-left:1px solid var(--border)}
@@ -195,8 +189,8 @@ h1.title{font-size:clamp(2.5rem,5.4vw,3.9rem);font-weight:800;margin:1.1rem 0 0;
 .lang .chip{width:16px;height:16px;border-radius:5px;display:inline-grid;place-items:center;color:#fff;font-size:.6rem;font-weight:800;font-family:var(--font-mono)}
 .chip.r{background:var(--r-blue)}
 .chip.py{background:linear-gradient(135deg,var(--py-blue),var(--py-gold))}
-pre{margin:0;font-family:var(--font-mono);font-size:.83rem;line-height:1.62;white-space:pre;overflow-x:auto}
-code{font-family:var(--font-mono);font-size:.9em}
+pre{margin:0;font-family:var(--font-mono);font-size:.83rem;line-height:1.62;white-space:pre;overflow-x:auto;font-variant-ligatures:none;font-feature-settings:"liga" 0,"calt" 0}
+code{font-family:var(--font-mono);font-size:.9em;font-variant-ligatures:none;font-feature-settings:"liga" 0,"calt" 0}
 :not(pre) > code{background:var(--surface-2);border:1px solid var(--border);padding:.05em .38em;border-radius:5px;font-size:.85em;color:var(--primary-ink)}
 pre code{background:none;border:0;padding:0;color:inherit;font-size:1em}
 .arrow-col{display:grid;place-items:center;padding:0 .1rem;background:var(--surface-2);border-left:1px solid var(--border);border-right:1px solid var(--border)}
@@ -238,8 +232,6 @@ h2.sec-title{font-size:clamp(1.7rem,3.4vw,2.4rem);font-weight:800;margin:.5rem 0
 .materials{display:grid;grid-template-columns:repeat(2,1fr);gap:1.4rem}
 .mat{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;transition:transform .15s,box-shadow .15s,border-color .15s}
 .mat:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);border-color:var(--border-strong)}
-.mat.feature-card{grid-column:1/-1;background:
-  linear-gradient(120deg,color-mix(in srgb,var(--primary-soft) 70%,var(--surface)),var(--surface) 60%)}
 .mat-top{display:flex;align-items:flex-start;gap:1rem}
 .mat .ic{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;flex:none;box-shadow:var(--shadow-sm)}
 .ic.slides{background:var(--gold-soft);color:var(--py-gold)}
@@ -357,7 +349,6 @@ h2.sec-title{font-size:clamp(1.7rem,3.4vw,2.4rem);font-weight:800;margin:.5rem 0
 <header class="site-header">
   <div class="wrap header-inner">
     <a class="brand" href="#top">
-      <img class="brand-mark" src="favicon.svg" alt="">
       <span>Python for R Users <span class="brand-sub">· JSM 2026</span></span>
     </a>
     <div class="spacer"></div>
@@ -386,7 +377,7 @@ h2.sec-title{font-size:clamp(1.7rem,3.4vw,2.4rem);font-weight:800;margin:.5rem 0
       <div class="hero-copy">
         <span class="eyebrow"><span class="dot"></span>JSM 2026 · Continuing Education Course</span>
         <h1 class="title" id="hero-title"><span class="py">Python</span> <span class="lo">for</span> <span class="rr">R</span> Users</h1>
-        <p class="lede">A hands-on afternoon for statisticians and data scientists who already know R. We focus on the differences that matter, the pitfalls that trip people up, and the core Python data-science stack. Every idea maps back to what you already do in R.</p>
+        <p class="lede">An introduction to Python for statisticians and data scientists who already work in R. The focus is on where the two languages differ, the pitfalls R users tend to hit, and the core Python data-science libraries, with each concept related back to its R equivalent.</p>
         <div class="hero-cta">
           <a class="btn btn-primary" href="#materials"><svg class="icon" aria-hidden="true"><use href="#i-nb"/></svg>Get the materials</a>
           <a class="btn btn-ghost" href="#setup"><svg class="icon" aria-hidden="true"><use href="#i-term"/></svg>Before you arrive</a>
@@ -394,23 +385,21 @@ h2.sec-title{font-size:clamp(1.7rem,3.4vw,2.4rem);font-weight:800;margin:.5rem 0
         <div class="facts">
           <span class="fact"><svg class="icon" aria-hidden="true"><use href="#i-cal"/></svg><b>Mon, Aug 3, 2026</b></span>
           <span class="fact"><svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg>1:00-5:00 PM</span>
+        </div>
+        <div class="facts" style="margin-top:.6rem">
           <span class="fact"><svg class="icon" aria-hidden="true"><use href="#i-signal"/></svg>No Python needed</span>
           <span class="fact"><svg class="icon" aria-hidden="true"><use href="#i-cap"/></svg>Comfortable in R</span>
         </div>
       </div>
 
       <div class="compare" aria-hidden="true">
-        <div class="compare-head">
-          <span class="dot3"><span></span><span></span><span></span></span>
-          <span class="tt">group &amp; summarise</span>
-        </div>
         <div class="compare-body">
           <div class="snip">
             <span class="lang"><span class="chip r">R</span>R · dplyr</span>
 <pre><code><span class="tok-fn">library</span>(dplyr)
 
-penguins <span class="tok-kw">|&gt;</span>
-  <span class="tok-fn">group_by</span>(species) <span class="tok-kw">|&gt;</span>
+penguins |&gt;
+  <span class="tok-fn">group_by</span>(species) |&gt;
   <span class="tok-fn">summarise</span>(
     mass = <span class="tok-fn">mean</span>(
       body_mass_g,
@@ -435,9 +424,9 @@ penguins <span class="tok-kw">|&gt;</span>
   <section id="overview" aria-labelledby="overview-h">
     <div class="wrap">
       <div class="sec-head">
-        <span class="kicker">The idea</span>
+        <span class="kicker">Approach</span>
         <h2 class="sec-title" id="overview-h">Learn Python by way of R</h2>
-        <p>You already think like a data scientist. This workshop doesn't start from zero. It translates. Each concept arrives next to its R equivalent, so you spend your energy on what's genuinely different rather than relearning the basics.</p>
+        <p>The workshop assumes you're already comfortable in R, so it doesn't start from scratch. Each concept is introduced alongside its R equivalent, keeping the focus on what actually differs in Python rather than on the fundamentals of data analysis.</p>
       </div>
       <div class="features">
         <div class="feature">
@@ -447,18 +436,18 @@ penguins <span class="tok-kw">|&gt;</span>
         </div>
         <div class="feature">
           <div class="ic"><svg class="icon" aria-hidden="true"><use href="#i-warn"/></svg></div>
-          <h3>The pitfalls that bite</h3>
-          <p>0-based indexing, <code>2**3</code> vs <code>2^3</code>, copy-vs-reference, mutable defaults. The traps R users hit first.</p>
+          <h3>Common pitfalls</h3>
+          <p>0-based indexing, <code>2**3</code> vs <code>2^3</code>, copy-vs-reference, and mutable defaults: the differences that most often catch R users.</p>
         </div>
         <div class="feature">
           <div class="ic"><svg class="icon" aria-hidden="true"><use href="#i-layers"/></svg></div>
-          <h3>The core stack</h3>
-          <p>NumPy, pandas, Matplotlib, seaborn, StatsModels, and scikit-learn. The libraries you'll actually use.</p>
+          <h3>Core libraries</h3>
+          <p>NumPy, pandas, Matplotlib, seaborn, StatsModels, and scikit-learn, the main libraries for data analysis in Python.</p>
         </div>
         <div class="feature">
           <div class="ic"><svg class="icon" aria-hidden="true"><use href="#i-term"/></svg></div>
           <h3>Hands-on throughout</h3>
-          <p>Code along in JupyterLab or Colab with guided notebooks and full solutions to keep.</p>
+          <p>Code along in JupyterLab or Colab using the workshop notebooks, with full solutions provided.</p>
         </div>
       </div>
     </div>
@@ -470,7 +459,7 @@ penguins <span class="tok-kw">|&gt;</span>
       <div class="sec-head">
         <span class="kicker">Curriculum</span>
         <h2 class="sec-title" id="curriculum-h">Two sessions, one afternoon</h2>
-        <p>We build from the language fundamentals up to the full data-science workflow. Roughly half the time on Python and NumPy, half on the data stack.</p>
+        <p>The material runs from the language fundamentals through the data-science workflow, split roughly evenly across the two sessions.</p>
       </div>
       <div class="sessions">
         <article class="session">
@@ -506,25 +495,10 @@ penguins <span class="tok-kw">|&gt;</span>
     <div class="wrap">
       <div class="sec-head">
         <span class="kicker">Materials</span>
-        <h2 class="sec-title" id="materials-h">Everything you need</h2>
-        <p>Slides, both hands-on notebooks with solutions, and a printable R&nbsp;↔&nbsp;Python cheat sheet. Open the notebooks straight in Colab for zero setup, browse them on GitHub, or download to run locally.</p>
+        <h2 class="sec-title" id="materials-h">Workshop materials</h2>
+        <p>Slides, both hands-on notebooks with solutions, and a printable R&nbsp;to&nbsp;Python cheat sheet. Open the notebooks in Colab for zero setup, or view them on GitHub.</p>
       </div>
       <div class="materials">
-
-        <div class="mat feature-card">
-          <div class="mat-top">
-            <div class="ic sheet"><svg class="icon" aria-hidden="true"><use href="#i-book"/></svg></div>
-            <div>
-              <h3>R ↔ Python cheat sheet</h3>
-              <p class="m-sub">Ten sections of side-by-side syntax. The reference to keep open all afternoon.</p>
-              <p class="m-body">Syntax &amp; operators, data types and structures, control flow, functions, NumPy, pandas vs dplyr, Matplotlib &amp; seaborn vs base R and ggplot2, statistical modeling, and the classic Python pitfalls for R users.</p>
-            </div>
-          </div>
-          <div class="mat-actions">
-            <a class="pill solid" href="https://github.com/emeyers/python4r/blob/main/python_r_cheatsheet.pdf" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-ext"/></svg>View PDF</a>
-            <a class="pill" href="https://github.com/emeyers/python4r/raw/main/python_r_cheatsheet.pdf"><svg class="icon" aria-hidden="true"><use href="#i-dl"/></svg>Download</a>
-          </div>
-        </div>
 
         <div class="mat">
           <div class="mat-top">
@@ -534,10 +508,25 @@ penguins <span class="tok-kw">|&gt;</span>
               <p class="m-sub">The full deck presented across both sessions.</p>
             </div>
           </div>
-          <p class="m-body">Concept overviews for each topic, shown before we drop into live coding.</p>
+          <p class="m-body">Concept overviews for each topic, shown ahead of the live-coding portions.</p>
           <div class="mat-actions">
             <a class="pill solid" href="https://github.com/emeyers/python4r/blob/main/python4r_slides.pdf" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-ext"/></svg>View PDF</a>
             <a class="pill" href="https://github.com/emeyers/python4r/raw/main/python4r_slides.pdf"><svg class="icon" aria-hidden="true"><use href="#i-dl"/></svg>Download</a>
+          </div>
+        </div>
+
+        <div class="mat">
+          <div class="mat-top">
+            <div class="ic sheet"><svg class="icon" aria-hidden="true"><use href="#i-book"/></svg></div>
+            <div>
+              <h3>R to Python cheat sheet</h3>
+              <p class="m-sub">Ten sections of side-by-side R and Python syntax for quick reference.</p>
+            </div>
+          </div>
+          <p class="m-body">Syntax &amp; operators, data types and structures, control flow, functions, NumPy, pandas vs dplyr, Matplotlib &amp; seaborn vs base R and ggplot2, statistical modeling, and the classic Python pitfalls for R users.</p>
+          <div class="mat-actions">
+            <a class="pill solid" href="https://github.com/emeyers/python4r/blob/main/python_r_cheatsheet.pdf" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-ext"/></svg>View PDF</a>
+            <a class="pill" href="https://github.com/emeyers/python4r/raw/main/python_r_cheatsheet.pdf"><svg class="icon" aria-hidden="true"><use href="#i-dl"/></svg>Download</a>
           </div>
         </div>
 
@@ -582,14 +571,14 @@ penguins <span class="tok-kw">|&gt;</span>
     <div class="wrap">
       <div class="sec-head">
         <span class="kicker">Before the workshop</span>
-        <h2 class="sec-title" id="setup-h">Two quick things beforehand</h2>
-        <p>A little prep means we can spend the whole afternoon writing code instead of installing it.</p>
+        <h2 class="sec-title" id="setup-h">Two things to do beforehand</h2>
+        <p>Doing these ahead of time means we can start on the material right away.</p>
       </div>
       <div class="setup-grid">
 
         <div class="card">
           <h3><span class="num">1</span>Take the background survey</h3>
-          <p>A two-minute survey on your background and what you'd like to get out of the day. It helps me tailor the pace and examples to the room. The sooner you fill it out, the better.</p>
+          <p>A short survey on your background and what you'd like to get out of the day. It helps me set the pace and choose relevant examples. Please complete it when you have a moment.</p>
           <div class="mat-actions" style="margin-top:1.15rem">
             <span class="pill muted"><svg class="icon" aria-hidden="true"><use href="#i-ext"/></svg>Survey link coming soon</span>
           </div>
@@ -597,7 +586,7 @@ penguins <span class="tok-kw">|&gt;</span>
 
         <div class="card">
           <h3><span class="num">2</span>Set up your environment</h3>
-          <p>Pick whichever fits how you like to work. Colab needs nothing installed; the local route gives you a permanent setup.</p>
+          <p>Choose whichever you prefer. Colab requires no installation; a local setup is permanent.</p>
 
           <div class="opt">
             <div class="opt-head"><svg class="icon" aria-hidden="true" style="color:var(--tok-num)"><use href="#i-play"/></svg>Option A: Google Colab <span class="badge rec">Zero install</span></div>
@@ -629,7 +618,7 @@ uv run jupyter lab</code></pre>
 
       <div class="note">
         <svg class="icon" aria-hidden="true"><use href="#i-warn"/></svg>
-        <span>Final setup details and the survey link will be posted here before the workshop. Check back closer to <b>August 3</b>. Stuck on setup? Email me and we'll sort it out ahead of time.</span>
+        <span>Final setup details and the survey link will be added here before the workshop. If you have any trouble with setup, feel free to email me beforehand.</span>
       </div>
     </div>
   </section>
@@ -646,7 +635,7 @@ uv run jupyter lab</code></pre>
         <div>
           <h3>Ethan Meyers</h3>
           <p class="role">Workshop instructor · JSM 2026 Continuing Education</p>
-          <p>Ethan created all of the workshop material. Reach out any time before the workshop with setup questions or topics you'd especially like to see covered.</p>
+          <p>Ethan created the workshop material. Feel free to get in touch before the workshop with any setup questions, or with topics you'd like to see covered.</p>
           <div class="inst-links">
             <a class="btn btn-ghost" href="mailto:Ethan.Meyers@gmail.com"><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg>Ethan.Meyers@gmail.com</a>
             <a class="btn btn-ghost" href="https://github.com/emeyers/python4r" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-gh"/></svg>Workshop repository</a>
@@ -661,7 +650,6 @@ uv run jupyter lab</code></pre>
   <div class="wrap">
     <div class="foot-inner">
       <div class="foot-brand">
-        <img class="brand-mark" src="favicon.svg" alt="" style="width:26px;height:26px">
         Python for R Users
       </div>
       <nav class="foot-links" aria-label="Footer">
