@@ -256,7 +256,7 @@ h2.sec-title{font-size:clamp(1.7rem,3.4vw,2.4rem);font-weight:800;margin:.5rem 0
 .pill.muted:hover{border-color:var(--border-strong);color:var(--faint);background:var(--surface)}
 
 /* setup */
-.setup-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem;align-items:start}
+.setup-grid{display:grid;grid-template-columns:1fr;gap:1.4rem;align-items:start}
 .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.6rem;box-shadow:var(--shadow-sm)}
 .card h3{font-size:1.16rem;font-weight:750;display:flex;align-items:center;gap:.6rem}
 .card h3 .num{width:28px;height:28px;border-radius:8px;background:var(--primary);color:#fff;display:grid;place-items:center;font-size:.9rem;font-weight:800;flex:none}
@@ -586,7 +586,6 @@ penguins |&gt;
 
         <div class="card">
           <h3><span class="num">2</span>Set up your environment</h3>
-          <p>Choose whichever you prefer. Colab requires no installation; a local setup is permanent.</p>
 
           <div class="opt">
             <div class="opt-head"><svg class="icon" aria-hidden="true" style="color:var(--tok-num)"><use href="#i-play"/></svg>Option A: Google Colab <span class="badge rec">Zero install</span></div>
@@ -598,7 +597,7 @@ penguins |&gt;
           <div class="opt">
             <div class="opt-head"><svg class="icon" aria-hidden="true" style="color:var(--primary-ink)"><use href="#i-term"/></svg>Option B: Run locally <span class="badge alt">JupyterLab</span></div>
             <div class="opt-body">
-              <p>Install <a href="https://docs.astral.sh/uv/" target="_blank" rel="noopener">uv</a> and Python 3.13+, then:</p>
+              <p>Install <a href="https://docs.astral.sh/uv/" target="_blank" rel="noopener">uv</a> and git, then:</p>
               <div class="codeblock">
 <pre><code><span class="tok-com"># clone the workshop repo</span>
 git clone https://github.com/emeyers/python4r.git
@@ -610,7 +609,6 @@ uv sync
 <span class="tok-com"># launch JupyterLab</span>
 uv run jupyter lab</code></pre>
               </div>
-              <p style="margin-top:.7rem">Prefer plain pip? Create a virtual environment and <code>pip install numpy scipy pandas matplotlib seaborn statsmodels scikit-learn jupyterlab</code>.</p>
             </div>
           </div>
         </div>
@@ -661,7 +659,7 @@ uv run jupyter lab</code></pre>
         <a href="mailto:Ethan.Meyers@gmail.com">Contact</a>
       </nav>
     </div>
-    <p class="foot-note">JSM 2026 Continuing Education Course · Material created by Ethan Meyers. Built with plain HTML &amp; hosted on GitHub Pages.</p>
+    <p class="foot-note">JSM 2026 Continuing Education Course · Material created by Ethan Meyers (with help from Claude). Built with plain HTML &amp; hosted on GitHub Pages.</p>
   </div>
 </footer>
 
