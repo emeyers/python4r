@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Python for R Users — JSM 2026 Workshop</title>
+<meta name="description" content="A JSM 2026 continuing-education workshop introducing Python to statisticians and data scientists who already know R. Slides, notebooks, and an R ↔ Python cheat sheet.">
+<meta name="author" content="Ethan Meyers">
+<meta name="theme-color" content="#3b5bdb">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+<!-- Open Graph / social -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Python for R Users — JSM 2026 Workshop">
+<meta property="og:description" content="A hands-on afternoon introducing Python to R users: NumPy, pandas, seaborn, StatsModels, and scikit-learn — mapped to what you already know.">
+<meta property="og:url" content="https://emeyers.github.io/python4r/">
+<meta name="twitter:card" content="summary">
+
+<!-- flip .no-js as early as possible so JS-only affordances can show -->
+<script>document.documentElement.classList.remove('no-js');
+(function(){try{var t=localStorage.getItem('p4r-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+
+<style>
+:root{
+  --font-sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --font-mono:"SFMono-Regular",ui-monospace,"Cascadia Code","Consolas","Liberation Mono",Menlo,monospace;
+
+  --bg:#fcfcfe;
+  --bg-soft:#f4f5fa;
+  --surface:#ffffff;
+  --surface-2:#f8f9fd;
+  --text:#171a2e;
+  --muted:#585d78;
+  --faint:#8a8fa8;
+  --border:#e6e8f1;
+  --border-strong:#d5d8e6;
+
+  --primary:#3b5bdb;
+  --primary-ink:#2c44b0;
+  --primary-soft:#eef1fe;
+
+  --r-blue:#1c6fc4;
+  --py-blue:#3776AB;
+  --py-gold:#efad2b;
+  --gold-soft:#fef6e6;
+
+  --shadow-sm:0 1px 2px rgba(20,24,50,.05),0 1px 3px rgba(20,24,50,.04);
+  --shadow-md:0 4px 12px rgba(20,24,50,.06),0 2px 6px rgba(20,24,50,.04);
+  --shadow-lg:0 18px 44px rgba(28,34,80,.12),0 6px 16px rgba(28,34,80,.07);
+
+  --radius:14px;
+  --radius-sm:10px;
+  --maxw:1120px;
+  --header-h:64px;
+
+  --tok-kw:#8a3ffc;
+  --tok-str:#0f8a5f;
+  --tok-fn:#2c44b0;
+  --tok-num:#b5651d;
+  --tok-com:#8a8fa8;
+}
+:root[data-theme="dark"]{
+  --bg:#0c0e1c;
+  --bg-soft:#111427;
+  --surface:#161930;
+  --surface-2:#1b1f39;
+  --text:#eceef8;
+  --muted:#a4a9c8;
+  --faint:#787d9c;
+  --border:#272c49;
+  --border-strong:#353b5e;
+
+  --primary:#8ea4ff;
+  --primary-ink:#aebdff;
+  --primary-soft:#1b2350;
+
+  --r-blue:#5fa2e6;
+  --py-blue:#6ea9dc;
+  --py-gold:#ffcb52;
+  --gold-soft:#2a2410;
+
+  --shadow-sm:0 1px 2px rgba(0,0,0,.4);
+  --shadow-md:0 4px 14px rgba(0,0,0,.35);
+  --shadow-lg:0 20px 50px rgba(0,0,0,.5);
+
+  --tok-kw:#c69bff;
+  --tok-str:#5fd0a0;
+  --tok-fn:#aebdff;
+  --tok-num:#f2b06a;
+  --tok-com:#787d9c;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0c0e1c;--bg-soft:#111427;--surface:#161930;--surface-2:#1b1f39;
+    --text:#eceef8;--muted:#a4a9c8;--faint:#787d9c;--border:#272c49;--border-strong:#353b5e;
+    --primary:#8ea4ff;--primary-ink:#aebdff;--primary-soft:#1b2350;
+    --r-blue:#5fa2e6;--py-blue:#6ea9dc;--py-gold:#ffcb52;--gold-soft:#2a2410;
+    --shadow-sm:0 1px 2px rgba(0,0,0,.4);--shadow-md:0 4px 14px rgba(0,0,0,.35);--shadow-lg:0 20px 50px rgba(0,0,0,.5);
+    --tok-kw:#c69bff;--tok-str:#5fd0a0;--tok-fn:#aebdff;--tok-num:#f2b06a;--tok-com:#787d9c;
+  }
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation-duration:.001ms!important;transition-duration:.001ms!important}}
+body{
+  margin:0;font-family:var(--font-sans);color:var(--text);background:var(--bg);
+  line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+}
+h1,h2,h3,h4{line-height:1.18;letter-spacing:-.02em;margin:0}
+p{margin:0}
+a{color:var(--primary-ink);text-decoration:none}
+a:hover{text-decoration:underline}
+img,svg{max-width:100%}
+:focus-visible{outline:2.5px solid var(--primary);outline-offset:2px;border-radius:4px}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 1.5rem}
+.icon{width:1.15em;height:1.15em;flex:none;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;vertical-align:-.18em}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+
+/* ---------- header ---------- */
+.site-header{
+  position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 82%,transparent);
+  backdrop-filter:saturate(160%) blur(12px);border-bottom:1px solid var(--border);
+}
+.header-inner{display:flex;align-items:center;gap:1rem;height:var(--header-h)}
+.brand{display:flex;align-items:center;gap:.6rem;color:var(--text);font-weight:700;letter-spacing:-.02em;font-size:1.02rem}
+.brand:hover{text-decoration:none}
+.brand-mark{width:30px;height:30px;border-radius:9px;flex:none;box-shadow:var(--shadow-sm)}
+.brand-sub{color:var(--faint);font-weight:500}
+.spacer{flex:1}
+.nav{position:relative}
+.nav summary{display:none}
+.nav-links{display:flex;align-items:center;gap:.35rem}
+.nav-links a{color:var(--muted);font-weight:550;font-size:.94rem;padding:.42rem .7rem;border-radius:8px;transition:color .15s,background .15s}
+.nav-links a:hover{color:var(--text);background:var(--surface-2);text-decoration:none}
+.nav-links a.active{color:var(--primary-ink)}
+.nav-links a.gh{display:inline-flex;align-items:center;gap:.4rem}
+.theme-toggle{
+  display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;flex:none;
+  border:1px solid var(--border);background:var(--surface);color:var(--muted);border-radius:9px;cursor:pointer;transition:.15s;
+}
+.theme-toggle:hover{color:var(--text);border-color:var(--border-strong)}
+.no-js .theme-toggle{display:none}
+.theme-toggle .moon{display:none}
+:root[data-theme="dark"] .theme-toggle .sun{display:none}
+:root[data-theme="dark"] .theme-toggle .moon{display:inline}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .theme-toggle .sun{display:none}:root:not([data-theme="light"]) .theme-toggle .moon{display:inline}}
+
+/* ---------- buttons ---------- */
+.btn{display:inline-flex;align-items:center;gap:.5rem;font-weight:600;font-size:.95rem;padding:.72rem 1.15rem;border-radius:10px;border:1px solid transparent;cursor:pointer;transition:transform .12s,box-shadow .15s,background .15s,border-color .15s;white-space:nowrap}
+.btn:hover{text-decoration:none;transform:translateY(-1px)}
+.btn-primary{background:var(--primary);color:#fff;box-shadow:var(--shadow-md)}
+.btn-primary:hover{box-shadow:var(--shadow-lg)}
+:root[data-theme="dark"] .btn-primary{color:#0c0e1c}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .btn-primary{color:#0c0e1c}}
+.btn-ghost{background:var(--surface);color:var(--text);border-color:var(--border-strong);box-shadow:var(--shadow-sm)}
+.btn-ghost:hover{border-color:var(--primary);color:var(--primary-ink)}
+
+/* ---------- hero ---------- */
+.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--border)}
+.hero::before{content:"";position:absolute;inset:0;z-index:0;
+  background:
+    radial-gradient(58% 55% at 82% -8%,color-mix(in srgb,var(--py-gold) 20%,transparent),transparent 70%),
+    radial-gradient(62% 60% at 8% 4%,color-mix(in srgb,var(--primary) 20%,transparent),transparent 68%);
+  opacity:.75}
+.hero::after{content:"";position:absolute;inset:0;z-index:0;opacity:.5;
+  background-image:radial-gradient(currentColor .8px,transparent .8px);background-size:22px 22px;color:var(--border-strong);
+  -webkit-mask-image:linear-gradient(to bottom,#000,transparent 82%);mask-image:linear-gradient(to bottom,#000,transparent 82%)}
+.hero-inner{position:relative;z-index:1;display:grid;grid-template-columns:1.05fr .95fr;gap:3rem;align-items:center;padding:4.2rem 0 3.6rem}
+.hero-inner>*{min-width:0}
+.eyebrow{display:inline-flex;align-items:center;gap:.55rem;font-size:.82rem;font-weight:700;letter-spacing:.02em;color:var(--primary-ink);background:var(--primary-soft);border:1px solid color-mix(in srgb,var(--primary) 22%,transparent);padding:.32rem .7rem;border-radius:999px}
+.eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--py-gold);box-shadow:0 0 0 3px color-mix(in srgb,var(--py-gold) 30%,transparent)}
+h1.title{font-size:clamp(2.5rem,5.4vw,3.9rem);font-weight:800;margin:1.1rem 0 0;letter-spacing:-.035em}
+.title .py{background:linear-gradient(120deg,var(--py-blue),var(--py-gold));-webkit-background-clip:text;background-clip:text;color:transparent}
+.title .rr{color:var(--r-blue)}
+.title .lo{color:var(--muted);font-weight:700}
+.lede{font-size:1.16rem;color:var(--muted);margin:1.15rem 0 0;max-width:34em}
+.hero-cta{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:1.7rem}
+.facts{display:flex;flex-wrap:wrap;gap:.5rem .5rem;margin-top:1.9rem}
+.fact{display:inline-flex;align-items:center;gap:.5rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:.5rem .8rem;font-size:.88rem;font-weight:550;color:var(--text);box-shadow:var(--shadow-sm)}
+.fact .icon{color:var(--primary);width:1.05rem;height:1.05rem}
+.fact b{font-weight:700}
+
+/* code compare card */
+.compare{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow-lg);overflow:hidden}
+.compare-head{display:flex;align-items:center;gap:.5rem;padding:.7rem .95rem;border-bottom:1px solid var(--border);background:var(--surface-2)}
+.compare-head .tt{margin-left:auto;font-size:.78rem;color:var(--faint);font-weight:600}
+.dot3{display:flex;gap:.4rem}
+.dot3 span{width:11px;height:11px;border-radius:50%;background:var(--border-strong)}
+.compare-body{display:grid;grid-template-columns:1fr auto 1fr}
+.snip{padding:1.05rem 1.15rem;min-width:0}
+.snip+.snip{border-left:1px solid var(--border)}
+.snip .lang{display:inline-flex;align-items:center;gap:.45rem;font-size:.74rem;font-weight:700;letter-spacing:.03em;text-transform:uppercase;color:var(--faint);margin-bottom:.6rem}
+.lang .chip{width:16px;height:16px;border-radius:5px;display:inline-grid;place-items:center;color:#fff;font-size:.6rem;font-weight:800;font-family:var(--font-mono)}
+.chip.r{background:var(--r-blue)}
+.chip.py{background:linear-gradient(135deg,var(--py-blue),var(--py-gold))}
+pre{margin:0;font-family:var(--font-mono);font-size:.83rem;line-height:1.62;white-space:pre;overflow-x:auto}
+code{font-family:var(--font-mono);font-size:.9em}
+:not(pre) > code{background:var(--surface-2);border:1px solid var(--border);padding:.05em .38em;border-radius:5px;font-size:.85em;color:var(--primary-ink)}
+pre code{background:none;border:0;padding:0;color:inherit;font-size:1em}
+.arrow-col{display:grid;place-items:center;padding:0 .1rem;background:var(--surface-2);border-left:1px solid var(--border);border-right:1px solid var(--border)}
+.arrow-col .icon{width:1.5rem;height:1.5rem;color:var(--primary)}
+.tok-kw{color:var(--tok-kw)}.tok-str{color:var(--tok-str)}.tok-fn{color:var(--tok-fn);font-weight:600}.tok-num{color:var(--tok-num)}.tok-com{color:var(--tok-com);font-style:italic}
+
+/* ---------- sections ---------- */
+section{padding:4.4rem 0;scroll-margin-top:calc(var(--header-h) + 12px)}
+.section-soft{background:var(--bg-soft);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.sec-head{max-width:44rem;margin-bottom:2.4rem}
+.kicker{font-size:.8rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--primary-ink)}
+h2.sec-title{font-size:clamp(1.7rem,3.4vw,2.4rem);font-weight:800;margin:.5rem 0 0}
+.sec-head p{color:var(--muted);font-size:1.08rem;margin-top:.75rem}
+
+/* feature grid */
+.features{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+.feature{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.4rem;box-shadow:var(--shadow-sm);transition:transform .15s,box-shadow .15s,border-color .15s}
+.feature:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);border-color:var(--border-strong)}
+.feature .ic{width:42px;height:42px;border-radius:11px;display:grid;place-items:center;background:var(--primary-soft);color:var(--primary-ink);margin-bottom:.9rem}
+.feature .ic .icon{width:1.35rem;height:1.35rem}
+.feature h3{font-size:1.04rem;font-weight:700}
+.feature p{color:var(--muted);font-size:.93rem;margin-top:.4rem}
+
+/* curriculum */
+.sessions{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem}
+.session{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.6rem 1.6rem 1.7rem;box-shadow:var(--shadow-sm);position:relative;overflow:hidden}
+.session::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(var(--py-blue),var(--py-gold))}
+.session .s-tag{display:inline-flex;align-items:center;gap:.5rem;font-size:.78rem;font-weight:700;letter-spacing:.03em;text-transform:uppercase;color:var(--primary-ink)}
+.session h3{font-size:1.28rem;font-weight:800;margin:.5rem 0 .2rem}
+.session .s-sub{color:var(--muted);font-size:.95rem;margin-bottom:1.1rem}
+.topics{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.1rem}
+.topics li{display:flex;gap:.8rem;padding:.62rem 0;border-top:1px solid var(--border);align-items:baseline}
+.topics li:first-child{border-top:0}
+.topics .n{font-family:var(--font-mono);font-size:.8rem;font-weight:700;color:var(--primary);flex:none;width:1.4rem}
+.topics .t b{font-weight:700}
+.topics .t span{color:var(--muted);font-size:.9rem;display:block}
+
+/* materials */
+.materials{display:grid;grid-template-columns:repeat(2,1fr);gap:1.4rem}
+.mat{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;transition:transform .15s,box-shadow .15s,border-color .15s}
+.mat:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);border-color:var(--border-strong)}
+.mat.feature-card{grid-column:1/-1;background:
+  linear-gradient(120deg,color-mix(in srgb,var(--primary-soft) 70%,var(--surface)),var(--surface) 60%)}
+.mat-top{display:flex;align-items:flex-start;gap:1rem}
+.mat .ic{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;flex:none;box-shadow:var(--shadow-sm)}
+.ic.slides{background:var(--gold-soft);color:var(--py-gold)}
+.ic.sheet{background:var(--primary-soft);color:var(--primary-ink)}
+.ic.nb{background:#e7f4ec;color:#0f8a5f}
+:root[data-theme="dark"] .ic.nb{background:#123024;color:#5fd0a0}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .ic.nb{background:#123024;color:#5fd0a0}}
+.ic .icon{width:1.5rem;height:1.5rem}
+.mat h3{font-size:1.14rem;font-weight:700}
+.mat .m-sub{color:var(--muted);font-size:.93rem;margin-top:.25rem}
+.mat .m-body{color:var(--muted);font-size:.94rem;margin-top:.9rem;flex:1}
+.mat-actions{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.15rem}
+.pill{display:inline-flex;align-items:center;gap:.42rem;font-size:.86rem;font-weight:600;padding:.48rem .8rem;border-radius:8px;border:1px solid var(--border-strong);background:var(--surface);color:var(--text);transition:.15s}
+.pill:hover{text-decoration:none;border-color:var(--primary);color:var(--primary-ink);background:var(--surface-2)}
+.pill.solid{background:var(--primary);color:#fff;border-color:transparent}
+:root[data-theme="dark"] .pill.solid{color:#0c0e1c}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .pill.solid{color:#0c0e1c}}
+.pill.solid:hover{background:var(--primary-ink);color:#fff}
+:root[data-theme="dark"] .pill.solid:hover{color:#0c0e1c}
+.pill .icon{width:1rem;height:1rem}
+.pill.muted{color:var(--faint);border-style:dashed;cursor:default}
+.pill.muted:hover{border-color:var(--border-strong);color:var(--faint);background:var(--surface)}
+
+/* setup */
+.setup-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem;align-items:start}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.6rem;box-shadow:var(--shadow-sm)}
+.card h3{font-size:1.16rem;font-weight:750;display:flex;align-items:center;gap:.6rem}
+.card h3 .num{width:28px;height:28px;border-radius:8px;background:var(--primary);color:#fff;display:grid;place-items:center;font-size:.9rem;font-weight:800;flex:none}
+:root[data-theme="dark"] .card h3 .num{color:#0c0e1c}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .card h3 .num{color:#0c0e1c}}
+.card p{color:var(--muted);margin-top:.6rem;font-size:.96rem}
+.opt{margin-top:1.15rem;border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden}
+.opt-head{display:flex;align-items:center;gap:.6rem;padding:.7rem .95rem;background:var(--surface-2);font-weight:650;font-size:.92rem}
+.badge{font-size:.7rem;font-weight:800;letter-spacing:.03em;text-transform:uppercase;padding:.18rem .5rem;border-radius:6px}
+.badge.rec{background:color-mix(in srgb,var(--py-gold) 25%,transparent);color:var(--tok-num)}
+.badge.alt{background:var(--primary-soft);color:var(--primary-ink)}
+.opt-body{padding:.6rem .95rem 1rem}
+.opt-body p{margin-top:.4rem;font-size:.92rem}
+.opt-body ol{margin:.4rem 0 0;padding-left:1.2rem;color:var(--muted);font-size:.92rem}
+.opt-body ol li{margin:.3rem 0}
+.codeblock{background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius-sm);margin-top:.9rem;overflow:hidden}
+.codeblock pre{padding:.95rem 1.1rem;font-size:.8rem}
+.note{display:flex;gap:.65rem;align-items:flex-start;margin-top:1.4rem;padding:.9rem 1.1rem;border-radius:var(--radius-sm);background:var(--gold-soft);border:1px solid color-mix(in srgb,var(--py-gold) 30%,transparent);font-size:.92rem;color:var(--text)}
+.note .icon{color:var(--py-gold);width:1.2rem;height:1.2rem;margin-top:.15rem;flex:none}
+
+/* instructor + cta */
+.instructor{display:grid;grid-template-columns:auto 1fr;gap:1.6rem;align-items:center;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.9rem;box-shadow:var(--shadow-sm)}
+.avatar{width:84px;height:84px;border-radius:50%;display:grid;place-items:center;font-size:1.9rem;font-weight:800;color:#fff;background:linear-gradient(135deg,var(--py-blue),var(--py-gold));box-shadow:var(--shadow-md);flex:none}
+.instructor h3{font-size:1.35rem;font-weight:800}
+.instructor .role{color:var(--muted);margin-top:.15rem}
+.instructor p{color:var(--muted);margin-top:.7rem;max-width:46em}
+.inst-links{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1rem}
+
+/* footer */
+.site-footer{background:var(--surface);border-top:1px solid var(--border);padding:2.6rem 0}
+.foot-inner{display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;align-items:center}
+.foot-brand{display:flex;align-items:center;gap:.6rem;font-weight:700}
+.foot-links{display:flex;flex-wrap:wrap;gap:1.2rem;font-size:.92rem}
+.foot-links a{color:var(--muted)}
+.foot-links a:hover{color:var(--text)}
+.foot-note{color:var(--faint);font-size:.85rem;margin-top:1rem}
+
+/* ---------- responsive ---------- */
+@media (max-width:960px){
+  .hero-inner{grid-template-columns:1fr;gap:2.2rem;padding:3rem 0 2.8rem}
+  .features{grid-template-columns:1fr 1fr}
+  .sessions,.materials,.setup-grid{grid-template-columns:1fr}
+}
+@media (max-width:640px){
+  :root{--header-h:60px}
+  .features{grid-template-columns:1fr}
+  .compare-body{grid-template-columns:1fr}
+  .snip+.snip{border-left:0;border-top:1px solid var(--border)}
+  .arrow-col{border:0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:.35rem}
+  .arrow-col .icon{transform:rotate(90deg)}
+  .instructor{grid-template-columns:1fr;text-align:center;justify-items:center}
+  .brand-sub{display:none}
+  .hero-cta .btn{flex:1 1 auto;justify-content:center}
+}
+@media (max-width:860px){
+  .nav summary{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border:1px solid var(--border);background:var(--surface);color:var(--muted);border-radius:9px;cursor:pointer;list-style:none}
+  .nav summary::-webkit-details-marker{display:none}
+  .nav summary::marker{content:""}
+  .nav-links{display:none;position:absolute;right:0;top:calc(100% + 10px);flex-direction:column;align-items:stretch;gap:.15rem;background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow-lg);padding:.5rem;min-width:210px}
+  .nav[open] .nav-links{display:flex}
+  .nav-links a{padding:.6rem .75rem}
+}
+</style>
+</head>
+<body id="top">
+
+<!-- icon sprite -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-cal" viewBox="0 0 24 24"><path d="M7 3v3M17 3v3M4 8.5h16"/><rect x="4" y="5" width="16" height="15" rx="2"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></symbol>
+  <symbol id="i-signal" viewBox="0 0 24 24"><path d="M6 19v-4M12 19v-9M18 19V6"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><path d="M9 8l-4 4 4 4M15 8l4 4-4 4"/></symbol>
+  <symbol id="i-warn" viewBox="0 0 24 24"><path d="M12 4.5 21 19H3L12 4.5Z"/><path d="M12 10v4.5M12 17h.01"/></symbol>
+  <symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 4 3.5 8.5 12 13l8.5-4.5L12 4Z"/><path d="M4 12.5 12 17l8-4.5M4 16 12 20.5 20 16"/></symbol>
+  <symbol id="i-term" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m7 10 2.5 2.5L7 15M12.5 15H16"/></symbol>
+  <symbol id="i-slides" viewBox="0 0 24 24"><path d="M4 4h16M5 4v9a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4M12 14v4M9 21l3-3 3 3"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M12 6.5C10.5 5 8 4.5 4.5 5v12c3.5-.5 6 0 7.5 1.5M12 6.5c1.5-1.5 4-2 7.5-1.5v12c-3.5-.5-6 0-7.5 1.5M12 6.5V18"/></symbol>
+  <symbol id="i-nb" viewBox="0 0 24 24"><path d="M7 3h7l5 5v12a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z"/><path d="M13 3v5h5"/><path d="M10.5 12.5 9 14l1.5 1.5M14 12.5 15.5 14 14 15.5"/></symbol>
+  <symbol id="i-dl" viewBox="0 0 24 24"><path d="M12 4v10m0 0 3.5-3.5M12 14l-3.5-3.5M5 16.5V18a1.5 1.5 0 0 0 1.5 1.5h11A1.5 1.5 0 0 0 19 18v-1.5"/></symbol>
+  <symbol id="i-ext" viewBox="0 0 24 24"><path d="M14 5h5v5M19 5l-8 8M18 13.5V18a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h4.5"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M10.2 8.8 15.5 12l-5.3 3.2V8.8Z" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h13M13 6.5 18.5 12 13 17.5"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="m4.5 7.5 7.5 5.5 7.5-5.5"/></symbol>
+  <symbol id="i-cap" viewBox="0 0 24 24"><path d="M12 5 2.5 9.5 12 14l9.5-4.5L12 5Z"/><path d="M6.5 11.5V16c0 1.1 2.5 2.5 5.5 2.5s5.5-1.4 5.5-2.5v-4.5M21 10v4.5"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2"/><path d="M12 3v2.2M12 18.8V21M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M3 12h2.2M18.8 12H21M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.4 6.4 0 0 0 10.5 10.5Z"/></symbol>
+  <symbol id="i-gh" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.5 2.87 8.31 6.84 9.65.5.09.68-.22.68-.49l-.01-1.7c-2.78.62-3.37-1.22-3.37-1.22-.46-1.18-1.11-1.49-1.11-1.49-.91-.64.07-.63.07-.63 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.36-2.22-.26-4.56-1.14-4.56-5.08 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.3.1-2.72 0 0 .84-.27 2.75 1.05a9.3 9.3 0 0 1 5 0c1.91-1.32 2.75-1.05 2.75-1.05.55 1.42.2 2.46.1 2.72.64.72 1.03 1.64 1.03 2.76 0 3.95-2.34 4.82-4.57 5.07.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.59.69.48A10.02 10.02 0 0 0 22 12.26C22 6.58 17.52 2 12 2Z"/></symbol>
+</svg>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="#top">
+      <img class="brand-mark" src="favicon.svg" alt="">
+      <span>Python for R Users <span class="brand-sub">· JSM 2026</span></span>
+    </a>
+    <div class="spacer"></div>
+    <details class="nav">
+      <summary aria-label="Toggle menu"><svg class="icon" aria-hidden="true"><use href="#i-signal"/></svg></summary>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#overview">Overview</a>
+        <a href="#curriculum">Curriculum</a>
+        <a href="#materials">Materials</a>
+        <a href="#setup">Setup</a>
+        <a href="#instructor">Instructor</a>
+        <a class="gh" href="https://github.com/emeyers/python4r" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-gh"/></svg>GitHub</a>
+      </nav>
+    </details>
+    <button class="theme-toggle" id="themeBtn" type="button" aria-label="Toggle dark mode">
+      <svg class="icon sun" aria-hidden="true"><use href="#i-sun"/></svg>
+      <svg class="icon moon" aria-hidden="true"><use href="#i-moon"/></svg>
+    </button>
+  </div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="hero" aria-labelledby="hero-title" style="scroll-margin-top:0">
+    <div class="wrap hero-inner">
+      <div class="hero-copy">
+        <span class="eyebrow"><span class="dot"></span>JSM 2026 · Continuing Education Course</span>
+        <h1 class="title" id="hero-title"><span class="py">Python</span> <span class="lo">for</span> <span class="rr">R</span> Users</h1>
+        <p class="lede">A hands-on afternoon for statisticians and data scientists who already know R. We focus on the differences that matter, the pitfalls that trip people up, and the core Python data-science stack — every idea mapped back to what you already do in R.</p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="#materials"><svg class="icon" aria-hidden="true"><use href="#i-nb"/></svg>Get the materials</a>
+          <a class="btn btn-ghost" href="#setup"><svg class="icon" aria-hidden="true"><use href="#i-term"/></svg>Before you arrive</a>
+        </div>
+        <div class="facts">
+          <span class="fact"><svg class="icon" aria-hidden="true"><use href="#i-cal"/></svg><b>Mon, Aug 3, 2026</b></span>
+          <span class="fact"><svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg>1:00–5:00 PM</span>
+          <span class="fact"><svg class="icon" aria-hidden="true"><use href="#i-signal"/></svg>No Python needed</span>
+          <span class="fact"><svg class="icon" aria-hidden="true"><use href="#i-cap"/></svg>Comfortable in R</span>
+        </div>
+      </div>
+
+      <div class="compare" aria-hidden="true">
+        <div class="compare-head">
+          <span class="dot3"><span></span><span></span><span></span></span>
+          <span class="tt">group &amp; summarise</span>
+        </div>
+        <div class="compare-body">
+          <div class="snip">
+            <span class="lang"><span class="chip r">R</span>R · dplyr</span>
+<pre><code><span class="tok-fn">library</span>(dplyr)
+
+penguins <span class="tok-kw">|&gt;</span>
+  <span class="tok-fn">group_by</span>(species) <span class="tok-kw">|&gt;</span>
+  <span class="tok-fn">summarise</span>(
+    mass = <span class="tok-fn">mean</span>(
+      body_mass_g,
+      na.rm = <span class="tok-kw">TRUE</span>))</code></pre>
+          </div>
+          <div class="arrow-col"><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></div>
+          <div class="snip">
+            <span class="lang"><span class="chip py">Py</span>Python · pandas</span>
+<pre><code><span class="tok-kw">import</span> pandas <span class="tok-kw">as</span> pd
+
+(penguins
+   .<span class="tok-fn">groupby</span>(<span class="tok-str">"species"</span>)
+   [<span class="tok-str">"body_mass_g"</span>]
+   .<span class="tok-fn">mean</span>())</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OVERVIEW -->
+  <section id="overview" aria-labelledby="overview-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="kicker">The idea</span>
+        <h2 class="sec-title" id="overview-h">Learn Python by way of R</h2>
+        <p>You already think like a data scientist. This workshop doesn't start from zero — it translates. Each concept arrives next to its R equivalent, so you spend your energy on what's genuinely different rather than relearning the basics.</p>
+      </div>
+      <div class="features">
+        <div class="feature">
+          <div class="ic"><svg class="icon" aria-hidden="true"><use href="#i-code"/></svg></div>
+          <h3>Built on what you know</h3>
+          <p>Every idea is shown side by side with its R or tidyverse counterpart, from vectors to <code>group_by</code>.</p>
+        </div>
+        <div class="feature">
+          <div class="ic"><svg class="icon" aria-hidden="true"><use href="#i-warn"/></svg></div>
+          <h3>The pitfalls that bite</h3>
+          <p>0-based indexing, <code>2**3</code> vs <code>2^3</code>, copy-vs-reference, mutable defaults — the traps R users hit first.</p>
+        </div>
+        <div class="feature">
+          <div class="ic"><svg class="icon" aria-hidden="true"><use href="#i-layers"/></svg></div>
+          <h3>The core stack</h3>
+          <p>NumPy, pandas, Matplotlib, seaborn, StatsModels, and scikit-learn — the libraries you'll actually use.</p>
+        </div>
+        <div class="feature">
+          <div class="ic"><svg class="icon" aria-hidden="true"><use href="#i-term"/></svg></div>
+          <h3>Hands-on throughout</h3>
+          <p>Code along in JupyterLab or Colab with guided notebooks and full solutions to keep.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CURRICULUM -->
+  <section id="curriculum" class="section-soft" aria-labelledby="curriculum-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="kicker">Curriculum</span>
+        <h2 class="sec-title" id="curriculum-h">Two sessions, one afternoon</h2>
+        <p>We build from the language fundamentals up to the full data-science workflow. Roughly half the time on Python and NumPy, half on the data stack.</p>
+      </div>
+      <div class="sessions">
+        <article class="session">
+          <span class="s-tag"><svg class="icon" aria-hidden="true"><use href="#i-code"/></svg>Session 1</span>
+          <h3>Python fundamentals &amp; NumPy</h3>
+          <p class="s-sub">The language itself, then array computing.</p>
+          <ul class="topics">
+            <li><span class="n">01</span><span class="t"><b>Basic syntax</b><span>Operators, strings, and import statements</span></span></li>
+            <li><span class="n">02</span><span class="t"><b>Data structures</b><span>Lists, tuples, and dictionaries</span></span></li>
+            <li><span class="n">03</span><span class="t"><b>Control flow &amp; functions</b><span>Loops, list comprehensions, conditionals</span></span></li>
+            <li><span class="n">04</span><span class="t"><b>NumPy</b><span>Arrays, vectorized ops, boolean indexing, random numbers</span></span></li>
+            <li><span class="n">05</span><span class="t"><b>Matplotlib</b><span>Figures, axes, and the plotting basics</span></span></li>
+          </ul>
+        </article>
+        <article class="session">
+          <span class="s-tag"><svg class="icon" aria-hidden="true"><use href="#i-layers"/></svg>Session 2</span>
+          <h3>The data-science stack</h3>
+          <p class="s-sub">From wrangling to modeling and prediction.</p>
+          <ul class="topics">
+            <li><span class="n">01</span><span class="t"><b>pandas</b><span>Selecting, filtering, GroupBy, joins, method chaining, missing data</span></span></li>
+            <li><span class="n">02</span><span class="t"><b>seaborn</b><span>Statistical graphics: displot, relplot, catplot</span></span></li>
+            <li><span class="n">03</span><span class="t"><b>StatsModels &amp; SciPy</b><span>Regression, distributions, and hypothesis tests</span></span></li>
+            <li><span class="n">04</span><span class="t"><b>scikit-learn</b><span>The fit / predict / score machine-learning workflow</span></span></li>
+            <li><span class="n">05</span><span class="t"><b>OOP &amp; duck typing</b><span>Classes, dunder methods, and Pythonic idioms</span></span></li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- MATERIALS -->
+  <section id="materials" aria-labelledby="materials-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="kicker">Materials</span>
+        <h2 class="sec-title" id="materials-h">Everything you need</h2>
+        <p>Slides, both hands-on notebooks with solutions, and a printable R&nbsp;↔&nbsp;Python cheat sheet. Open the notebooks straight in Colab for zero setup, browse them on GitHub, or download to run locally.</p>
+      </div>
+      <div class="materials">
+
+        <div class="mat feature-card">
+          <div class="mat-top">
+            <div class="ic sheet"><svg class="icon" aria-hidden="true"><use href="#i-book"/></svg></div>
+            <div>
+              <h3>R ↔ Python cheat sheet</h3>
+              <p class="m-sub">Ten sections of side-by-side syntax — the reference to keep open all afternoon.</p>
+              <p class="m-body">Syntax &amp; operators, data types and structures, control flow, functions, NumPy, pandas vs dplyr, Matplotlib &amp; seaborn vs base R and ggplot2, statistical modeling, and the classic Python pitfalls for R users.</p>
+            </div>
+          </div>
+          <div class="mat-actions">
+            <a class="pill solid" href="https://github.com/emeyers/python4r/blob/main/python_r_cheatsheet.pdf" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-ext"/></svg>View PDF</a>
+            <a class="pill" href="https://github.com/emeyers/python4r/raw/main/python_r_cheatsheet.pdf"><svg class="icon" aria-hidden="true"><use href="#i-dl"/></svg>Download</a>
+          </div>
+        </div>
+
+        <div class="mat">
+          <div class="mat-top">
+            <div class="ic slides"><svg class="icon" aria-hidden="true"><use href="#i-slides"/></svg></div>
+            <div>
+              <h3>Course slides</h3>
+              <p class="m-sub">The full deck presented across both sessions.</p>
+            </div>
+          </div>
+          <p class="m-body">Concept overviews for each topic, shown before we drop into live coding.</p>
+          <div class="mat-actions">
+            <a class="pill solid" href="https://github.com/emeyers/python4r/blob/main/python4r_slides.pdf" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-ext"/></svg>View PDF</a>
+            <a class="pill" href="https://github.com/emeyers/python4r/raw/main/python4r_slides.pdf"><svg class="icon" aria-hidden="true"><use href="#i-dl"/></svg>Download</a>
+          </div>
+        </div>
+
+        <div class="mat">
+          <div class="mat-top">
+            <div class="ic nb"><svg class="icon" aria-hidden="true"><use href="#i-nb"/></svg></div>
+            <div>
+              <h3>Session 1 notebook</h3>
+              <p class="m-sub">Python fundamentals, NumPy &amp; Matplotlib.</p>
+            </div>
+          </div>
+          <p class="m-body">The hands-on notebook we work through together. Solutions in a separate file.</p>
+          <div class="mat-actions">
+            <a class="pill solid" href="https://colab.research.google.com/github/emeyers/python4r/blob/main/notebook_01.ipynb" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-play"/></svg>Open in Colab</a>
+            <a class="pill" href="https://github.com/emeyers/python4r/blob/main/notebook_01.ipynb" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-gh"/></svg>View on GitHub</a>
+            <a class="pill" href="https://colab.research.google.com/github/emeyers/python4r/blob/main/notebook_01_answers.ipynb" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-play"/></svg>Solutions</a>
+          </div>
+        </div>
+
+        <div class="mat">
+          <div class="mat-top">
+            <div class="ic nb"><svg class="icon" aria-hidden="true"><use href="#i-nb"/></svg></div>
+            <div>
+              <h3>Session 2 notebook</h3>
+              <p class="m-sub">pandas, seaborn, StatsModels &amp; scikit-learn.</p>
+            </div>
+          </div>
+          <p class="m-body">The second hands-on notebook, covering the full data-science stack.</p>
+          <div class="mat-actions">
+            <a class="pill solid" href="https://colab.research.google.com/github/emeyers/python4r/blob/main/notebook_02.ipynb" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-play"/></svg>Open in Colab</a>
+            <a class="pill" href="https://github.com/emeyers/python4r/blob/main/notebook_02.ipynb" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-gh"/></svg>View on GitHub</a>
+            <a class="pill" href="https://colab.research.google.com/github/emeyers/python4r/blob/main/notebook_02_answers.ipynb" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-play"/></svg>Solutions</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SETUP -->
+  <section id="setup" class="section-soft" aria-labelledby="setup-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="kicker">Before the workshop</span>
+        <h2 class="sec-title" id="setup-h">Two quick things beforehand</h2>
+        <p>A little prep means we can spend the whole afternoon writing code instead of installing it.</p>
+      </div>
+      <div class="setup-grid">
+
+        <div class="card">
+          <h3><span class="num">1</span>Take the background survey</h3>
+          <p>A two-minute survey on your background and what you'd like to get out of the day. It helps me tailor the pace and examples to the room — the sooner you fill it out, the better.</p>
+          <div class="mat-actions" style="margin-top:1.15rem">
+            <span class="pill muted"><svg class="icon" aria-hidden="true"><use href="#i-ext"/></svg>Survey link coming soon</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3><span class="num">2</span>Set up your environment</h3>
+          <p>Pick whichever fits how you like to work. Colab needs nothing installed; the local route gives you a permanent setup.</p>
+
+          <div class="opt">
+            <div class="opt-head"><svg class="icon" aria-hidden="true" style="color:var(--tok-num)"><use href="#i-play"/></svg>Option A — Google Colab <span class="badge rec">Zero install</span></div>
+            <div class="opt-body">
+              <p>Nothing to install. From the <a href="#materials">Materials</a> section, click <b>Open in Colab</b> on either notebook and start coding in your browser. A free Google account is all you need.</p>
+            </div>
+          </div>
+
+          <div class="opt">
+            <div class="opt-head"><svg class="icon" aria-hidden="true" style="color:var(--primary-ink)"><use href="#i-term"/></svg>Option B — Run locally <span class="badge alt">JupyterLab</span></div>
+            <div class="opt-body">
+              <p>Install <a href="https://docs.astral.sh/uv/" target="_blank" rel="noopener">uv</a> and Python 3.13+, then:</p>
+              <div class="codeblock">
+<pre><code><span class="tok-com"># clone the workshop repo</span>
+git clone https://github.com/emeyers/python4r.git
+cd python4r
+
+<span class="tok-com"># install everything from pyproject.toml + uv.lock</span>
+uv sync
+
+<span class="tok-com"># launch JupyterLab</span>
+uv run jupyter lab</code></pre>
+              </div>
+              <p style="margin-top:.7rem">Prefer plain pip? Create a virtual environment and <code>pip install numpy scipy pandas matplotlib seaborn statsmodels scikit-learn jupyterlab</code>.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="note">
+        <svg class="icon" aria-hidden="true"><use href="#i-warn"/></svg>
+        <span>Final setup details and the survey link will be posted here before the workshop — check back closer to <b>August 3</b>. Stuck on setup? Email me and we'll sort it out ahead of time.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- INSTRUCTOR -->
+  <section id="instructor" aria-labelledby="instructor-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="kicker">Your instructor</span>
+        <h2 class="sec-title" id="instructor-h">Who's teaching</h2>
+      </div>
+      <div class="instructor">
+        <div class="avatar" aria-hidden="true">EM</div>
+        <div>
+          <h3>Ethan Meyers</h3>
+          <p class="role">Workshop instructor · JSM 2026 Continuing Education</p>
+          <p>Ethan created all of the workshop material. Reach out any time before the workshop with setup questions or topics you'd especially like to see covered.</p>
+          <div class="inst-links">
+            <a class="btn btn-ghost" href="mailto:Ethan.Meyers@gmail.com"><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg>Ethan.Meyers@gmail.com</a>
+            <a class="btn btn-ghost" href="https://github.com/emeyers/python4r" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-gh"/></svg>Workshop repository</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot-inner">
+      <div class="foot-brand">
+        <img class="brand-mark" src="favicon.svg" alt="" style="width:26px;height:26px">
+        Python for R Users
+      </div>
+      <nav class="foot-links" aria-label="Footer">
+        <a href="#overview">Overview</a>
+        <a href="#curriculum">Curriculum</a>
+        <a href="#materials">Materials</a>
+        <a href="#setup">Setup</a>
+        <a href="https://github.com/emeyers/python4r" target="_blank" rel="noopener">GitHub</a>
+        <a href="mailto:Ethan.Meyers@gmail.com">Contact</a>
+      </nav>
+    </div>
+    <p class="foot-note">JSM 2026 Continuing Education Course · Material created by Ethan Meyers. Built with plain HTML &amp; hosted on GitHub Pages.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  // Theme toggle with persistence
+  var root=document.documentElement, btn=document.getElementById('themeBtn');
+  function current(){
+    var set=root.getAttribute('data-theme');
+    if(set) return set;
+    return window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';
+  }
+  btn && btn.addEventListener('click',function(){
+    var next=current()==='dark'?'light':'dark';
+    root.setAttribute('data-theme',next);
+    try{localStorage.setItem('p4r-theme',next);}catch(e){}
+  });
+
+  // Close mobile nav after choosing a link
+  var nav=document.querySelector('.nav');
+  nav && nav.querySelectorAll('.nav-links a').forEach(function(a){
+    a.addEventListener('click',function(){nav.removeAttribute('open');});
+  });
+
+  // Highlight active section in the nav
+  var links=Array.prototype.slice.call(document.querySelectorAll('.nav-links a[href^="#"]'));
+  var map={};
+  links.forEach(function(a){var id=a.getAttribute('href').slice(1);var el=document.getElementById(id);if(el)map[id]=a;});
+  if('IntersectionObserver' in window){
+    var obs=new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        var a=map[en.target.id];
+        if(!a) return;
+        if(en.isIntersecting){links.forEach(function(l){l.classList.remove('active');});a.classList.add('active');}
+      });
+    },{rootMargin:'-45% 0px -50% 0px',threshold:0});
+    Object.keys(map).forEach(function(id){obs.observe(document.getElementById(id));});
+  }
+})();
+</script>
+</body>
+</html>
