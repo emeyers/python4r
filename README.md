@@ -2,7 +2,8 @@
 ## JSM 2026 Continuing Education Workshop
 
 **Date:** Monday, August 3, 2026 | 1:00–5:00 PM  
-**Instructor:** Ethan Meyers
+**Instructor:** Ethan Meyers  
+**Website:** https://emeyers.github.io/python4r/
 
 This workshop introduces Python to statisticians and data scientists who already know R. We focus on the differences that matter, the pitfalls that catch people moving from R, and the central Python data science libraries (NumPy, Pandas, Matplotlib, Seaborn, StatsModels, scikit-learn).
 
