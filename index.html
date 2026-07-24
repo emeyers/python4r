@@ -271,7 +271,16 @@ h2.sec-title{font-size:clamp(1.7rem,3.4vw,2.4rem);font-weight:800;margin:.5rem 0
 .opt-body{padding:.6rem .95rem 1rem}
 .opt-body p{margin-top:.4rem;font-size:.92rem}
 .opt-body ol{margin:.4rem 0 0;padding-left:1.2rem;color:var(--muted);font-size:.92rem}
-.opt-body ol li{margin:.3rem 0}
+.opt-body ol li{margin:.55rem 0}
+.opt-body ol li b{color:var(--text)}
+.opt-body ul{margin:.45rem 0 .2rem;padding-left:1.1rem;color:var(--muted);font-size:.9rem}
+.opt-body ul li{margin:.28rem 0}
+details.adv{margin-top:1.15rem;border-top:1px solid var(--border);padding-top:.9rem}
+details.adv summary{cursor:pointer;font-weight:650;font-size:.9rem;color:var(--primary-ink);list-style:none}
+details.adv summary::-webkit-details-marker{display:none}
+details.adv summary::marker{content:""}
+details.adv summary::before{content:"+  ";font-weight:800;font-family:var(--font-mono)}
+details.adv[open] summary::before{content:"\2212  "}
 .codeblock{background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius-sm);margin-top:.9rem;overflow:hidden}
 .codeblock pre{padding:.95rem 1.1rem;font-size:.8rem}
 .note{display:flex;gap:.65rem;align-items:flex-start;margin-top:1.4rem;padding:.9rem 1.1rem;border-radius:var(--radius-sm);background:var(--gold-soft);border:1px solid color-mix(in srgb,var(--py-gold) 30%,transparent);font-size:.92rem;color:var(--text)}
@@ -496,7 +505,10 @@ penguins |&gt;
       <div class="sec-head">
         <span class="kicker">Materials</span>
         <h2 class="sec-title" id="materials-h">Workshop materials</h2>
-        <p>Slides, both hands-on notebooks with solutions, and a printable R&nbsp;to&nbsp;Python cheat sheet. Open the notebooks in Colab for zero setup, or view them on GitHub.</p>
+        <p>Slides, both hands-on notebooks with solutions, and a printable R&nbsp;to&nbsp;Python cheat sheet. Open the notebooks in Colab for zero setup, or view them on GitHub. To work on your own computer, download everything in one file.</p>
+        <div style="margin-top:1.3rem">
+          <a class="btn btn-primary" href="https://github.com/emeyers/python4r/archive/refs/heads/main.zip"><svg class="icon" aria-hidden="true"><use href="#i-dl"/></svg>Download everything (ZIP)</a>
+        </div>
       </div>
       <div class="materials">
 
@@ -595,10 +607,33 @@ penguins |&gt;
           </div>
 
           <div class="opt">
-            <div class="opt-head"><svg class="icon" aria-hidden="true" style="color:var(--primary-ink)"><use href="#i-term"/></svg>Option B: Run locally <span class="badge alt">JupyterLab</span></div>
+            <div class="opt-head"><svg class="icon" aria-hidden="true" style="color:var(--primary-ink)"><use href="#i-term"/></svg>Option B: Run on your own computer <span class="badge alt">JupyterLab</span></div>
             <div class="opt-body">
-              <p>Install <a href="https://docs.astral.sh/uv/" target="_blank" rel="noopener">uv</a> and git, then:</p>
-              <div class="codeblock">
+              <p>No typing required. Download one file, unzip it, and double-click the launcher for your computer. It installs Python and everything else for you.</p>
+              <ol>
+                <li><b>Download the materials.</b><br>
+                  <a class="pill solid" style="margin-top:.5rem" href="https://github.com/emeyers/python4r/archive/refs/heads/main.zip"><svg class="icon" aria-hidden="true"><use href="#i-dl"/></svg>Download everything (ZIP)</a>
+                </li>
+                <li><b>Unzip it.</b> On Windows, right-click the downloaded file and choose <b>Extract All</b> (please don't skip this step). On a Mac, double-click it.</li>
+                <li><b>Open the new <code>python4r-main</code> folder and double-click the launcher:</b>
+                  <ul>
+                    <li>Windows: <code>START-HERE-Windows.bat</code></li>
+                    <li>Mac: <code>START-HERE-Mac.command</code></li>
+                  </ul>
+                </li>
+                <li><b>The first time only,</b> your computer may ask permission before running it:
+                  <ul>
+                    <li><b>Mac:</b> if it is blocked, control-click (or right-click) the file, choose <b>Open</b>, then click <b>Open</b> in the dialog. If there is no Open button, go to System Settings &gt; Privacy &amp; Security and click <b>Open Anyway</b>.</li>
+                    <li><b>Windows:</b> if you see "Windows protected your PC", click <b>More info</b>, then <b>Run anyway</b>.</li>
+                  </ul>
+                </li>
+              </ol>
+              <p style="margin-top:.9rem">That is all. The first run downloads Python and the course packages, so give it 5 to 10 minutes and leave the window open. JupyterLab then opens in your browser. Whenever you want to work on the material again, just double-click the same file.</p>
+
+              <details class="adv">
+                <summary>Prefer the command line?</summary>
+                <p>Install <a href="https://docs.astral.sh/uv/" target="_blank" rel="noopener">uv</a> and git, then:</p>
+                <div class="codeblock">
 <pre><code><span class="tok-com"># clone the workshop repo</span>
 git clone https://github.com/emeyers/python4r.git
 cd python4r
@@ -608,7 +643,8 @@ uv sync
 
 <span class="tok-com"># launch JupyterLab</span>
 uv run jupyter lab</code></pre>
-              </div>
+                </div>
+              </details>
             </div>
           </div>
         </div>
