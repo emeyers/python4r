@@ -1,0 +1,6 @@
+# Keep the double-click launchers working inside the downloaded ZIP.
+# macOS/bash breaks on CRLF, so force LF. Windows cmd.exe is safest
+# with CRLF, so store those bytes verbatim.
+*.command text eol=lf
+*.sh      text eol=lf
+*.bat     -text
